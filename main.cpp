@@ -21,48 +21,54 @@ int Trouver_DIST_Min(vector<int>dist, map<int,bool> passer)
 
     return min_index;
 }
-void printSolution(vector<int>dist)
+void printSolution(vector<int>dist ,int src )
 {
-    printf("Vertex   Distance from Source\n");
+    cout <<"Sommet   Distance a partir de de " << src << "\n" ;
     for (int i = 0; i < nbr_sommet; i++)
-        cout << "%d \t\t %d\n"<< i<< dist[i];
+        cout << " \n"<< i<< " \t\t"<<dist[i];
 }
 vector<int> dijkstra(int graph[nbr_sommet][nbr_sommet] ,int debut)
 {
-    vector<int> dist ;
+    vector<int>dist ;
     map<int,bool> passer;
+
     // initialiser le vect et la map
-    int max =INT_MAX ;
     for(int i=0;i < nbr_sommet;i++)
     {
 
         // n initialise tous le vecteur avec des INT c'est une grande valeur
         // pou map de verificationnc'est par de false
-        dist[i]=max;
+       // dist[i]=INT_MAX;
+        dist.insert(dist.begin()+i,INT_MAX);
         passer.insert(make_pair(i,false));
         //Initialiser la distance de la source par 0
     }
     // rendre la premiere cse a 0
-    dist[debut]=0;
+    //dist[debut]=0;
+    dist.insert(dist.begin(),0);
     for(int j=0; j < nbr_sommet-1;j++)
     {
         int sommet = Trouver_DIST_Min(dist ,passer) ;
         // donc ce sommet est deja passer
         passer.find(sommet)->second=true ;
-        for (int i ;i<nbr_sommet;i++){
+        for (int i=0 ;i<nbr_sommet;i++){
             // verifier qui n'est passer dans la map
             // si graph[sommet][i]!=0 donc il y un poit entre ces sommet donc c'est voisin
             //verifier que la distance n'est pas l'infini ou bien la grand valeur
-            if(!passer.find(i)->second && graph[sommet][i] &&  dist[i]!=INT_MAX
-               && dist[sommet]+graph[sommet][i] < dist[i] )
-                dist[i]=dist[sommet]+graph[sommet][i] ;
+            if(!passer.find(i)->second && graph[sommet][i] &&  *dist.begin()!=INT_MAX
+               && (dist.at(sommet)-1)+(graph[sommet][i]) < dist[i] ) {
 
+
+
+                dist[i]=dist.at(sommet)+graph[sommet][i];
+
+            }
         }
 
 
 
     }
-    //printSolution(dist);
+
     return dist ;
 
 
@@ -70,7 +76,7 @@ vector<int> dijkstra(int graph[nbr_sommet][nbr_sommet] ,int debut)
 }
 int main()
 {
-    cout <<"hemlooooooooooooooooooooooooooooooooooooo";
+  
 
     vector<int> d ;
     // Let us create the example graph discussed above
@@ -85,11 +91,9 @@ int main()
                                           { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 
     d= dijkstra(graph, 0);
-    for(int i =0 ; i<nbr_sommet;i++)
-    {
-        cout << d[i] ;
-    }
-    printSolution(d);
+
+
+    printSolution(d,0);
 
 
     return 0;
