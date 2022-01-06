@@ -1,5 +1,9 @@
 
 // Created by bouricha on 2021-12-31.
+
+   
+
+   // Created by bouricha on 2021-12-31.
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -7,7 +11,7 @@
 #include <map>
 using namespace std ;
 #include <cstdlib>
-#define nbr_sommet 5
+#define nbr_sommet 4
 // Pour trouver la distance minimale
 int Trouver_DIST_Min(vector<int>dist, map<int,bool> passer)
 {
@@ -57,9 +61,6 @@ vector<int> dijkstra(int graph[nbr_sommet][nbr_sommet] ,int debut)
             //verifier que la distance n'est pas l'infini ou bien la grand valeur
             if(!passer.find(i)->second && graph[sommet][i] &&  *dist.begin()!=INT_MAX
                && (dist.at(sommet)-1)+(graph[sommet][i]) < dist[i] ) {
-
-
-
                 dist[i]=dist.at(sommet)+graph[sommet][i];
 
             }
@@ -76,15 +77,12 @@ vector<int> dijkstra(int graph[nbr_sommet][nbr_sommet] ,int debut)
 }
 int main()
 {
-  
-
     vector<int> d ;
     // Let us create the example graph discussed above
-    int graph[nbr_sommet][nbr_sommet] = { { 0, 3, 0, 2, 0 },
-                                          { 4, 0, 8, 0, 0 },
-                                          { 0, 8, 0, 5, 0 },
-                                          { 7, 1, 7, 0, 9 },
-                                          { 0, 0, 1, 9, 0} };
+    int graph[nbr_sommet][nbr_sommet] = { { 0, 4, 0, 0 },
+                                          { 4, 0, 8, 0 },
+                                          { 0, 8, 0, 7 },
+                                          { 0, 0, 7, 0 } };
 
     d= dijkstra(graph, 0);
 
